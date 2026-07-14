@@ -1,0 +1,29 @@
+title: Suspicious PowerShell EncodedCommand Exeution
+id: 8c4e1e6a-2f3b-4a91-9d2e-1a2b3c4d5e6f
+status: experimental
+description: Detects PowerShell invoked with -EncodedCommand, commonly used to obfuscate malicious payloads. 
+author: cyberdork21
+date: 2026-07-01
+references:
+  - https://attack.mitre.org/techniques/T1059/001/
+  - https://www.sans.org/blog/powershell-encodedcommand/
+  - https://attack.mitre.org/techniques/T1027/
+tags:
+  - attack.execution
+  - attack.t1059.001
+  - attack.t1027
+  - powershell
+  - encodedcommand
+  - obfuscation
+logsource:
+    category: process_creation
+    product: windows
+detection: 
+    selection:
+        Image|endswith: '\powershell.exe'
+        CommandLine|contains: '-EncodedCommand'
+    condition: selection
+falsepositives:
+    -Legitimate administrative scripts that use -EncodedCommand for automation or deployment purposes. 
+    - PowerShell scripts executed by security tools or monitoring solutions that utilize -EncodedCommand for legitimate reasons. 
+level: medium
