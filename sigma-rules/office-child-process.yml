@@ -1,0 +1,39 @@
+title: MS Office Suspicious Child Process Creation
+id: 91b9b970-2932-4832-9936-0c27d77c7c91
+status: experimental
+description: Detects command line interpreter or scripting engine spawned by Microsoft Office applications. 
+author: cyberdork21
+date: 2026-07-02
+references:
+    - https://attack.mitre.org/techniques/T1059/
+    - https://attack.mitre.org/techniques/T1059/001/
+    - https://attack.mitre.org/techniques/T1059/003/
+    - https://attack.mitre.org/techniques/T1059/005/
+tags: 
+    - attack.execution
+    - attack.t1059.001
+    - attack.t1059.003
+    - attack.t1059.005
+logsource: 
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        ParentImage|endswith:        #ParentImage|re: '(WINWORD|EXCEL|POWERPNT|OUTLOOK)\.EXE'
+            - '\WINWORD.EXE'
+            - '\EXCEL.EXE'
+            - '\POWERPNT.EXE'
+            - '\OUTLOOK.EXE'
+
+        Image|endswith:              #Image|re: '(powershell|cmd|pwsh)\.exe'
+            - '\powershell.exe'
+            - '\pwsh.exe'
+            - '\cmd.exe'
+            - '\wscript.exe'
+            - '\cscript.exe'
+    condition: selection
+falsepositives:
+  - Legitimate VBA macro activity to collect system information or generate reports or access active directory or automate microsoft 365 administration. 
+  - Older enterprise system using VBScript automation.
+  - Report automation, system manufacturing
+level: high
