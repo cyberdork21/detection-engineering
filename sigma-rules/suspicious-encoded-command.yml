@@ -3,7 +3,7 @@ id: 8c4e1e6a-2f3b-4a91-9d2e-1a2b3c4d5e6f
 status: experimental
 description: Detects PowerShell invoked with -EncodedCommand, commonly used to obfuscate malicious payloads. 
 author: cyberdork21
-date: 2026-07-01
+date: 2026-07-14
 references:
   - https://attack.mitre.org/techniques/T1059/001/
   - https://www.sans.org/blog/powershell-encodedcommand/
