@@ -1,0 +1,35 @@
+title: LSASS Memory Dump Detection
+id: 9fd0952d-edb9-4792-9c73-2f19f7e638eb
+status: experimental
+description: Detects attempts to access credential material stored in the process of LSASS. This is a common technique used by attackers to dump credentials from memory.
+author: cyberdork21
+date: 2026-07-02
+references:
+    - https://attack.mitre.org/techniques/T1003/001/
+    - https://redcanary.com/threat-detection-report/techniques/lsass-memory/
+    - https://www.microsoft.com/en-us/security/blog/2022/10/05/detecting-and-preventing-lsass-credential-dumping-attacks/
+tags:
+    - attack.credential_access
+    - attack.t1003.001
+logsource:
+    category: process_access
+    product: windows
+detection:        
+    selection:
+        TargetImage|endswith: '\lsass.exe'
+        GrantedAccess:
+            - '0x1010'
+            - '0x1F0FFF'
+            - '0x1410'
+    filter1:
+        SourceImage|contains: 
+        - 'taskmgr.exe'
+        - 'wininit.exe'
+        - 'csrss.exe'
+        - 'services.exe'
+        - 'svchost.exe'
+condition: selection and not filter1
+falsepositives:
+    - Legitimate administrative tools that require access to LSASS for debugging or monitoring purposes.
+    - Security software that interacts with LSASS for credential management or auditing.
+level: critical
