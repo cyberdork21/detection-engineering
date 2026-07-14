@@ -1,0 +1,36 @@
+title: New scheduled task via schtasks.exe or PowerShell
+id: e5a39fe8-027e-41e3-9273-2dc67857c924
+status: experimental
+description: Detects new scheduled task creation originating from schtasks.exe or PowerShell. 
+author: cyberdork21
+date: 2026-07-06
+references: 
+    - https://nasbench.medium.com/behind-the-detection-schtasks-eb67a33a8710
+    - https://learn.microsoft.com/en-us/powershell/module/scheduledtasks/new-scheduledtask?view=windowsserver2025-ps
+    - https://detection.fyi/sigmahq/sigma/windows/process_creation/proc_creation_win_schtasks_creation/
+tags:
+    - attack.execution
+    - attack.persistence
+    - attack.privilege-escalation
+    - attack.t1053
+    - attack.t1053.005
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection1:
+         Image|endswith: '\schtasks.exe'
+         CommandLine|contains: '/create'
+    selection2:
+        Image|endswith:
+            - '\powershell.exe'
+            - '\pwsh.exe'
+        CommandLine|contains: 
+            - 'New-ScheduledTask'
+            - 'Register-ScheduledTask'
+    condition: selection1 or selection2
+falsepositives:
+    - Administrative purposes
+    - Software installation
+    - Backup creation
+level: low
