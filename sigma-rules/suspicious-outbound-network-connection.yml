@@ -1,0 +1,51 @@
+title: Suspicious outbound network connection from unusual process
+id: 53a7b283-0e42-4e97-9b8b-d79619c43e37
+status: experimental
+description: Detects suspicious outbound network connections, originating from unusual processes. 
+author: cyberdork21
+date: 2026-07-17
+references:
+    - https://www.elastic.co/docs/reference/security/prebuilt-rules/rules/windows/defense_evasion_unusual_process_network_connection
+    - https://attack.mitre.org/tactics/TA0005/
+    - https://attack.mitre.org/techniques/T1036/
+    - https://attack.mitre.org/techniques/T1218/005/
+    - https://attack.mitre.org/techniques/T1218/009/
+    - https://attack.mitre.org/techniques/T1218/011/
+tags:
+ - attack.defense-evasion
+ - attack.t1036
+ - attack.t1218.005
+ - attack.t1218.009
+ - attack.t1218.011
+ - attack.t1047
+ - attack.t1105
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - '\cmd.exe'
+            - '\certutil.exe'
+            - '\rundll32.exe'
+            - '\bitsadmin.exe'
+            - '\mshta.exe'
+            - '\regsvr32.exe'
+            - '\wmic.exe'
+    ip_filtering:
+        DestinationIP|cidr:
+            - '10.0.0.0/8'
+            - '127.0.0.0/8'
+            - '172.16.0.0/12'
+            - '192.168.0.0/16'
+            - '169.254.0.0/16'
+            - '100.64.0.0/10'
+            - 'fc00::/7'
+            - 'fe80::/10'
+            - '::1/128'
+    condition: selection and not ip_filtering
+falsepositives:
+    - Legitimate installer or updater may use this process to register components
+    - Administrative activity
+    - Legitimate vulnerability scanners, monitoring tools and EDR scans.
+level: medium
