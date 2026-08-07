@@ -18,11 +18,11 @@ operational experience rather than generic placeholders.
 
 | Rule | ATT&CK Technique | Tactic | Status |
 |---|---|---|---|
-| [MS Office Suspicious Child Process Creation](rules/office-child-process.yml) | T1059.001 / T1059.003 / T1059.005 | Execution | experimental |
-| [LSASS Memory Dump Detection](rules/lsass-memory-dump.yml) | T1003.001 | Credential Access | experimental |
-| [New Scheduled Task via schtasks.exe or PowerShell](rules/schtasks-scheduled-task.yml) | T1053.005 | Persistence | experimental |
-| [Suspicios Encoded Command Executed](rules/suspicious-encoded-command.yml) | T1059.001 / T1027 | Execution | experimental |
-| [Suspicios RDP Connection from Non-Private IP Address](rules/suspicious-rdp-connections-from-public-ip.yml) | T1133 / T1078 | Initial-Access | experimental |
+| [MS Office Suspicious Child Process Creation](sigma-rules/office-child-process.yml) | T1059.001 / T1059.003 / T1059.005 | Execution | experimental |
+| [LSASS Memory Dump Detection](sigma-rules/lsass-memory-dump.yml) | T1003.001 | Credential Access | experimental |
+| [New Scheduled Task via schtasks.exe or PowerShell](sigma-rules/schtasks-scheduled-task.yml) | T1053.005 | Persistence | experimental |
+| [Suspicios Encoded Command Executed](sigma-rules/suspicious-encoded-command.yml) | T1059.001 / T1027 | Execution | experimental |
+| [Suspicios RDP Connection from Non-Private IP Address](sigma-rules/suspicious-rdp-connections-from-public-ip.yml) | T1133 / T1078 | Initial-Access | experimental |
 
 
 ## Methodology
