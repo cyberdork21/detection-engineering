@@ -23,7 +23,7 @@ operational experience rather than generic placeholders.
 | [New Scheduled Task via schtasks.exe or PowerShell](https://github.com/cyberdork21/detection-engineering/blob/main/sigma-rules/schtasks-scheduled-task.yml) | T1053.005 | Persistence | experimental |
 | [Suspicios Encoded Command Executed](https://github.com/cyberdork21/detection-engineering/blob/main/sigma-rules/suspicious-encoded-command.yml) | T1059.001 / T1027 | Execution | experimental |
 | [Suspicios RDP Connection from Non-Private IP Address](https://github.com/cyberdork21/detection-engineering/blob/main/sigma-rules/suspicious-rdp-connection-from-public-ip.yml) | T1133 / T1078 | Initial Access | experimental |
-| [Suspicios RDP Connection from Non-Private IP Address](https://github.com/cyberdork21/detection-engineering/blob/main/sigma-rules/suspicious-outbound-network-connection.yml) | T1036 / T1218.005 / T1218.009 | Defense Evasion | experimental |
+| [Suspicious Outbound Network Communication](https://github.com/cyberdork21/detection-engineering/blob/main/sigma-rules/suspicious-outbound-network-connection.yml) | T1036 / T1218.005 / T1218.009 | Defense Evasion | experimental |
 
 
 ## Methodology
