@@ -1,0 +1,42 @@
+title: Suspicious RDP Connection from Non-Private IP Address
+id: 6f26e4b9-64b1-417d-be90-e5a5491c977c
+status: experimental
+description: Detects successful Remote Desktop Protocol (RDP) logons originating from non-private IP addresses, which may indicate externally exposed RDP services, unauthorized remote access, or compromised accounts.
+author: cyberdork21
+date: 2026-08-07
+references:
+    - https://frsecure.com/blog/rdp-connection-event-logs/
+    - https://ponderthebits.com/2018/02/windows-rdp-related-event-logs-identification-tracking-and-investigation/
+    - https://www.thedfirspot.com/post/lateral-movement-remote-desktop-protocol-rdp-event-logs
+tags:
+    - attack.initial-access
+    - attack.t1133
+    - attack.t1078
+logsource:
+    service: security 
+    product: windows
+detection:
+    selection:
+        EventID: 4624
+        LogonType:
+            - 10
+            - 7
+    private_ips_range:
+        IpAddress|cidr:
+            - '10.0.0.0/8'
+            - '127.0.0.0/8'
+            - '172.16.0.0/12'
+            - '192.168.0.0/16'
+            - '169.254.0.0/16'
+            - '100.64.0.0/10'
+            - 'fc00::/7'
+            - 'fe80::/10'
+            - '::1/128'
+    filter_empty:
+        IpAddress: '-'
+    condition: selection and not private_ips_range and not filter_empty
+falsepositives:
+    - Initiator utilizes VPN services. 
+    - Initiator is working remotely.
+    - Initiator is external partner.
+level: medium
